@@ -81,6 +81,21 @@ object Hello extends Greeting with App {
     println(temp8)
     println(temp8Equivalence)
     println(temp8Equivalence2)
+
+
+    val temp9 = for {
+        s <- states
+        c <- s
+        if c.isLower
+    } yield s"$c-${c.toUpper}"
+    // 结果值: List("l-L", "a-A", "b-B", ...)
+    val temp9Equivalence = states flatMap (_.toSeq withFilter (_.isLower) map (c => s"$c-${c.toUpper}"))
+    val temp9Equivalence2 = states flatMap (p => p withFilter (k => k.isLower) map (c => s"$c-${c.toUpper}"))
+    val temp9Equivalence3 = states flatMap (p => p filter (k => k.isLower) map (c => s"$c-${c.toUpper}"))
+    println(temp9)
+    println(temp9Equivalence)
+    println(temp9Equivalence2)
+    println(temp9Equivalence3)
 }
 
 trait Greeting {
